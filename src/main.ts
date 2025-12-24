@@ -1,14 +1,18 @@
-import { Logger } from '@nestjs/common';
 import { createNestApp } from './bootstrap';
 
 import { environment } from '@infra/environment';
+import { LoggerService } from '@infra/logger/logger.service';
+
+const logger = new LoggerService();
 
 async function bootstrap() {
   const app = await createNestApp();
   await app.listen(environment.PORT, '0.0.0.0');
 
-  const logger = new Logger('API startup');
-  logger.log(`Listening on ${await app.getUrl()}`);
+  logger.log(`Listening on ${await app.getUrl()}`, 'API start up');
+  throw new Error('Simulated startup error');
 }
 
-bootstrap().catch(error => console.error(error));
+bootstrap().catch(error =>
+  logger.error('Application failed to start :: ', `${error}`, 'API crash'),
+);

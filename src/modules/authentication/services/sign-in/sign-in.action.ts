@@ -12,7 +12,7 @@ export class SignInAction implements IAction {
 
   do = (data: SignInDto): AuthResponse => {
     this.logger.error(
-      `Sign-in attempt :: ${JSON.stringify(data)}`,
+      `Sign-in action :: ${JSON.stringify(data)}`,
       'AuthService',
     );
     return {

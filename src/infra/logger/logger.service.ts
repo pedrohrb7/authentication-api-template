@@ -20,7 +20,7 @@ export class LoggerService implements LoggerServiceNest {
     extra?: Record<string, unknown>,
   ) {
     this.logger.error(
-      `[ERROR] [${context || 'App'}] ${message} extra: ${JSON.stringify(extra)}`,
+      `[ERROR] [${context || 'App'}] ${message} || extra: ${JSON.stringify(extra) || ''} `,
       trace,
     );
   }
