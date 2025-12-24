@@ -1,9 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from '../services/auth.service';
 import { SignInDto, SignUpDto } from '../dtos';
 import { AuthResponse, IAuthController } from '../interfaces';
+import { BaseUserDto } from '@common/dtos/BaseUserDto.dto';
+import { SignInResponse } from '../dtos/SignInResponse.dto';
 
 @Controller('auth')
 @ApiTags('Authentication')
@@ -16,7 +18,8 @@ export class AuthController implements IAuthController {
   })
   @ApiResponse({
     status: 200,
-    description: '',
+    description: 'Login successful',
+    type: SignInResponse,
   })
   @ApiResponse({
     status: 401,
@@ -38,6 +41,8 @@ export class AuthController implements IAuthController {
     status: 500,
     description: '',
   })
+  // @Public()
+  @HttpCode(HttpStatus.OK)
   @Post('sign-in')
   signIn(@Body() data: SignInDto): AuthResponse {
     return this.authService.signIn(data);

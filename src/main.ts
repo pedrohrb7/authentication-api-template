@@ -10,7 +10,6 @@ async function bootstrap() {
   await app.listen(environment.PORT, '0.0.0.0');
 
   logger.log(`Listening on ${await app.getUrl()}`, 'API start up');
-  throw new Error('Simulated startup error');
 }
 
 bootstrap().catch(error =>

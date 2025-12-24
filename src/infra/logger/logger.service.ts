@@ -1,13 +1,20 @@
+import { environment } from '@infra/environment';
 import {
+  ConsoleLogger,
   Injectable,
-  Logger,
   LoggerService as LoggerServiceNest,
 } from '@nestjs/common';
 
 @Injectable()
 export class LoggerService implements LoggerServiceNest {
   constructor() {}
-  logger = new Logger('CustomLogger');
+  logger = new ConsoleLogger('CustomLogger', {
+    timestamp: true,
+    logLevels:
+      environment.NODE_ENV === 'development'
+        ? ['log', 'error', 'warn', 'debug']
+        : ['error', 'warn', 'fatal'],
+  });
 
   log(message: string, context?: string) {
     this.logger.log(`[LOG] [${context || 'App'}] ${message}`);
