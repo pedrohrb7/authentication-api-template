@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
 
-interface IAuthService {
-  signIn(data: any): void;
-  signUp(data: any): void;
-}
+import { AuthResponse, IAuthService } from '../interfaces';
+import { SignInDto } from '../dtos';
+import { SignInAction } from './sign-in/sign-in.action';
 
 @Injectable()
 export class AuthService implements IAuthService {
-  constructor() {}
+  constructor(private readonly signInAction: SignInAction) {}
 
-  signIn(data: any): void {
-    // Implementation for sign-in
+  signIn(data: SignInDto): AuthResponse {
+    return this.signInAction.do(data);
   }
 
   signUp(data: any): void {

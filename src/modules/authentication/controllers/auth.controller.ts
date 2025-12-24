@@ -3,11 +3,7 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from '../services/auth.service';
 import { SignInDto, SignUpDto } from '../dtos';
-
-interface IAuthController {
-  signIn(data: any): void;
-  signUp(data: any): void;
-}
+import { AuthResponse, IAuthController } from '../interfaces';
 
 @Controller('auth')
 @ApiTags('Authentication')
@@ -43,7 +39,7 @@ export class AuthController implements IAuthController {
     description: '',
   })
   @Post('sign-in')
-  signIn(@Body() data: SignInDto): void {
+  signIn(@Body() data: SignInDto): AuthResponse {
     return this.authService.signIn(data);
   }
 
@@ -76,7 +72,7 @@ export class AuthController implements IAuthController {
     description: '',
   })
   @Post('sign-up')
-  signUp(@Body() data: SignUpDto): void {
+  signUp(@Body() data: SignUpDto) {
     return this.authService.signUp(data);
   }
 }
