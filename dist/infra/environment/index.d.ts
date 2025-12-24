@@ -5,12 +5,11 @@ export interface DotEnv {
     JWT_SECRET: string;
     JWT_EXPIRES_IN: string;
     JWT_REFRESH_EXPIRES_IN: string;
-    DB_HOST_ORA: string;
-    DB_PORT_ORA: number;
-    DB_USER_ORA: string;
-    DB_PASS_ORA: string;
-    DB_NAME_ORA: string;
-    ORACLE_INSTANT_CLIENT_PATH: string;
+    DB_HOST: string;
+    DB_PORT: number;
+    DB_USER: string;
+    DB_PASS: string;
+    DB_NAME: string;
     ENABLE_TYPEORM_LOGS: boolean;
     API_BASE_PATH: string;
     RATE_LIMIT_TTL: number;
@@ -20,4 +19,3 @@ export interface DotEnv {
     ALLOWED_MIME_TYPES: string;
 }
 export declare const environment: DotEnv;
-export default environment;

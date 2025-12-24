@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { createNestApp } from './bootstrap';
 
-import environment from './infra/environment';
+import { environment } from '@infra/environment';
 
 async function bootstrap() {
   const app = await createNestApp();

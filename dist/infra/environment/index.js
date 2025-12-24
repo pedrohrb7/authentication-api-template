@@ -35,22 +35,27 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.environment = void 0;
 const envalid = __importStar(require("envalid"));
-const isLocal = true;
-if (isLocal)
-    require('dotenv').config();
+var EnvEnum;
+(function (EnvEnum) {
+    EnvEnum["PRODUCTION"] = "production";
+    EnvEnum["TEST"] = "test";
+    EnvEnum["DEVELOPMENT"] = "development";
+})(EnvEnum || (EnvEnum = {}));
 const spec = {
-    NODE_ENV: envalid.str({ choices: ['production', 'test', 'development'] }),
+    NODE_ENV: envalid.str({
+        default: EnvEnum.DEVELOPMENT,
+        choices: Object.values(EnvEnum),
+    }),
     PORT: envalid.port({ default: 4001 }),
     JWT_PUBLIC_KEY: envalid.str({ default: '' }),
     JWT_SECRET: envalid.str(),
     JWT_EXPIRES_IN: envalid.str({ default: '1h' }),
     JWT_REFRESH_EXPIRES_IN: envalid.str({ default: '14d' }),
-    DB_HOST_ORA: envalid.str(),
-    DB_PORT_ORA: envalid.num(),
-    DB_USER_ORA: envalid.str(),
-    DB_PASS_ORA: envalid.str(),
-    DB_NAME_ORA: envalid.str(),
-    ORACLE_INSTANT_CLIENT_PATH: envalid.str(),
+    DB_HOST: envalid.str(),
+    DB_PORT: envalid.num(),
+    DB_USER: envalid.str(),
+    DB_PASS: envalid.str(),
+    DB_NAME: envalid.str(),
     API_BASE_PATH: envalid.str({ default: '' }),
     RATE_LIMIT_TTL: envalid.num({ default: 60000 }),
     RATE_LIMIT_REQUESTS: envalid.num({ default: 120 }),
@@ -62,5 +67,4 @@ const spec = {
     }),
 };
 exports.environment = envalid.cleanEnv(process.env, spec);
-exports.default = exports.environment;
 //# sourceMappingURL=index.js.map

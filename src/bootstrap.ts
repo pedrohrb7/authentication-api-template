@@ -10,7 +10,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 
 import { AppModule } from './app.module';
-import environment from './infra/environment';
+import { environment } from '@infra/environment';
 
 async function registerHelmet(app: INestApplication): Promise<void> {
   const fastify = app.getHttpAdapter().getInstance() as FastifyInstance;

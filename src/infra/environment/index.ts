@@ -1,13 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-require-imports */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import * as envalid from 'envalid';
-
-const isLocal = true;
-
-// If it's running locally, we'll load .env files
-if (isLocal) require('dotenv').config();
 
 export interface DotEnv {
   /**
@@ -50,32 +41,27 @@ export interface DotEnv {
   /**
    * The host, ip or domain, for the Oracle Cluster
    */
-  DB_HOST_ORA: string;
+  DB_HOST: string;
 
   /**
    * The port number for the Oracle Cluster
    */
-  DB_PORT_ORA: number;
+  DB_PORT: number;
 
   /**
    * The user for the Oracle Cluster
    */
-  DB_USER_ORA: string;
+  DB_USER: string;
 
   /**
    * The user's password
    */
-  DB_PASS_ORA: string;
+  DB_PASS: string;
 
   /**
    * The name of the DB within the cluster
    */
-  DB_NAME_ORA: string;
-
-  /**
-   * The path for Oracle's Instant Client
-   */
-  ORACLE_INSTANT_CLIENT_PATH: string;
+  DB_NAME: string;
 
   /**
    * Key to enable typeorm logging
@@ -132,19 +118,27 @@ type EnvValidator<EnvSpec> = {
   [K in keyof EnvSpec]: envalid.ValidatorSpec<EnvSpec[K]>;
 };
 
+enum EnvEnum {
+  PRODUCTION = 'production',
+  TEST = 'test',
+  DEVELOPMENT = 'development',
+}
+
 const spec: EnvValidator<DotEnv> = {
-  NODE_ENV: envalid.str({ choices: ['production', 'test', 'development'] }),
+  NODE_ENV: envalid.str({
+    default: EnvEnum.DEVELOPMENT,
+    choices: Object.values(EnvEnum),
+  }),
   PORT: envalid.port({ default: 4001 }),
   JWT_PUBLIC_KEY: envalid.str({ default: '' }),
   JWT_SECRET: envalid.str(),
   JWT_EXPIRES_IN: envalid.str({ default: '1h' }),
   JWT_REFRESH_EXPIRES_IN: envalid.str({ default: '14d' }),
-  DB_HOST_ORA: envalid.str(),
-  DB_PORT_ORA: envalid.num(),
-  DB_USER_ORA: envalid.str(),
-  DB_PASS_ORA: envalid.str(),
-  DB_NAME_ORA: envalid.str(),
-  ORACLE_INSTANT_CLIENT_PATH: envalid.str(),
+  DB_HOST: envalid.str(),
+  DB_PORT: envalid.num(),
+  DB_USER: envalid.str(),
+  DB_PASS: envalid.str(),
+  DB_NAME: envalid.str(),
   API_BASE_PATH: envalid.str({ default: '' }),
   RATE_LIMIT_TTL: envalid.num({ default: 60000 }),
   RATE_LIMIT_REQUESTS: envalid.num({ default: 120 }),
@@ -157,4 +151,3 @@ const spec: EnvValidator<DotEnv> = {
 };
 
 export const environment: DotEnv = envalid.cleanEnv(process.env, spec);
-export default environment;
