@@ -1,13 +1,12 @@
 import { createNestApp } from './bootstrap';
 
-import { environment } from '@infra/environment';
 import { LoggerService } from '@infra/logger/logger.service';
 
 const logger = new LoggerService();
 
 async function bootstrap() {
   const app = await createNestApp();
-  await app.listen(environment.PORT, '0.0.0.0');
+  await app.listen(7001, '0.0.0.0');
 
   logger.log(`Listening on ${await app.getUrl()}`, 'API start up');
 }

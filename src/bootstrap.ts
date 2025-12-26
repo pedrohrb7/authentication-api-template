@@ -10,7 +10,6 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 
 import { AppModule } from './app.module';
-import { environment } from '@infra/environment';
 
 async function registerHelmet(app: INestApplication): Promise<void> {
   const fastify = app.getHttpAdapter().getInstance() as FastifyInstance;
@@ -35,7 +34,7 @@ async function registerHelmet(app: INestApplication): Promise<void> {
 }
 
 function registerOpenAPI(app: INestApplication): void {
-  if (!environment.ENABLE_OPENAPI) return;
+  // if (!environment.ENABLE_OPENAPI) return;
 
   const config = new DocumentBuilder()
     .setTitle('API')
@@ -46,7 +45,7 @@ function registerOpenAPI(app: INestApplication): void {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup(environment.API_BASE_PATH + '/swagger', app, document, {
+  SwaggerModule.setup('/api/swagger', app, document, {
     swaggerOptions: { docExpansion: 'none' },
   });
 }
@@ -72,7 +71,7 @@ export async function createNestApp(): Promise<INestApplication> {
     AppModule,
     new FastifyAdapter(),
     {
-      abortOnError: environment.NODE_ENV === 'production',
+      abortOnError: false,
     },
   );
 
@@ -82,7 +81,7 @@ export async function createNestApp(): Promise<INestApplication> {
   registerOpenAPI(app);
   await registerMiddlewares(app);
 
-  app.setGlobalPrefix(environment.API_BASE_PATH);
+  app.setGlobalPrefix('api');
 
   return app;
 }
