@@ -8,14 +8,17 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { LoggerService } from '@infra/logger/logger.service';
 
-import { IUserController } from '../interfaces';
 import { UserService } from '../services/user.service';
+
+import { IUserController } from '../interfaces';
 import { CreateUserDto } from '../dtos/create-user.dto';
 
 @Controller('user')
+@ApiTags('User')
 export class UserController implements IUserController {
   constructor(
     private readonly logger: LoggerService,

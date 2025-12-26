@@ -1,21 +1,24 @@
 import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigService } from '@nestjs/config';
 import { DataSource } from 'typeorm';
+
 import { LoggerService } from '@infra/logger/logger.service';
+import { ConfigModule } from '@infra/environment/config.module';
+import { ConfigProvider } from '@infra/environment/providers/config.provider';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      imports: [],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
+      imports: [ConfigModule],
+      inject: [ConfigProvider],
+      useFactory: (configService: ConfigProvider) => ({
         type: 'mongodb',
-        url: configService.get<string>('MONGODB_URL'),
-        database: configService.get<string>('MONGO_DB_NAME'),
-        synchronize: configService.get<string>('NODE_ENV') !== 'production',
-        logging: configService.get<boolean>('DB_LOGGING', true),
-        autoLoadEntities: true,
+        url: configService.get('MONGODB_URL'),
+        database: configService.get('MONGO_DB_NAME'),
+        synchronize: configService.get('NODE_ENV') !== 'production',
+        logging: configService.get('DB_LOGGING') === 'true',
+        autoLoadEntities:
+          configService.get('AUTO_LOAD_MONGO_ENTITIES') === 'true',
       }),
     }),
   ],

@@ -12,7 +12,7 @@ import { LoggerService } from '@infra/logger/logger.service';
 export class UserService implements IUserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: MongoRepository<UserEntity>,
+    private readonly userRepository: MongoRepository<UserEntity>,
     private readonly logger: LoggerService,
   ) {}
 
