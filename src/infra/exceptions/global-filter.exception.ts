@@ -19,6 +19,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     let status = 500;
     this.logger.error(
       `Exception caught by GlobalExceptionFilter: ${JSON.stringify(exception)}`,
+      '',
       'GlobalExceptionFilter',
     );
 
