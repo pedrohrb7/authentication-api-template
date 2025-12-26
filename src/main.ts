@@ -1,6 +1,6 @@
 import { createNestApp } from './bootstrap';
 
-import { LoggerService } from '@infra/logger/logger.service';
+import { LoggerService } from '@infra/logger/services/logger.service';
 
 const logger = new LoggerService();
 

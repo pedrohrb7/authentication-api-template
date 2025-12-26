@@ -1,4 +1,4 @@
-import { LoggerService } from '@infra/logger/logger.service';
+import { LoggerService } from '@infra/logger/services/logger.service';
 import {
   Catch,
   ArgumentsHost,

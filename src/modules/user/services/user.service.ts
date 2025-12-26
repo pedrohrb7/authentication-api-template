@@ -6,7 +6,7 @@ import { UserEntity } from '@infra/database/mongodb/entities/user.entity';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { IUserService } from '../interfaces';
 
-import { LoggerService } from '@infra/logger/logger.service';
+import { LoggerService } from '@infra/logger/services/logger.service';
 
 @Injectable()
 export class UserService implements IUserService {

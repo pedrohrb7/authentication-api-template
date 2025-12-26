@@ -2,7 +2,7 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-import { LoggerService } from '@infra/logger/logger.service';
+import { LoggerService } from '@infra/logger/services/logger.service';
 import { ConfigModule } from '@infra/environment/config.module';
 import { ConfigProvider } from '@infra/environment/providers/config.provider';
 

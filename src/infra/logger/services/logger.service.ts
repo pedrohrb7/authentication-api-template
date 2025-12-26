@@ -4,15 +4,20 @@ import {
   LoggerService as LoggerServiceNest,
 } from '@nestjs/common';
 
+import { ConfigProvider } from '@infra/environment/providers/config.provider';
+
 @Injectable()
 export class LoggerService implements LoggerServiceNest {
   constructor() {}
+
+  private readonly configProvider = new ConfigProvider('.env');
+
   logger = new ConsoleLogger('CustomLogger', {
     timestamp: true,
     logLevels:
-      // environment.NODE_ENV === 'development'
-      ['fatal', 'log', 'error', 'warn', 'debug'],
-    // : ['error', 'warn', 'fatal'],
+      String(this.configProvider.get('NODE_ENV')) === 'development'
+        ? ['fatal', 'log', 'error', 'warn', 'debug']
+        : ['error', 'warn', 'fatal'],
   });
 
   log(message: string, context?: string) {
@@ -37,5 +42,9 @@ export class LoggerService implements LoggerServiceNest {
 
   debug(message: string, context?: string) {
     this.logger.debug(`[DEBUG] [${context || 'App'}] ${message}`);
+  }
+
+  fatal(message: string, context?: string) {
+    this.logger.fatal(`[FATAL] [${context || 'App'}] ${message}`);
   }
 }

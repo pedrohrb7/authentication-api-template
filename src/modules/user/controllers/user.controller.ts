@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { LoggerService } from '@infra/logger/logger.service';
+import { LoggerService } from '@infra/logger/services/logger.service';
 
 import { UserService } from '../services/user.service';
 
