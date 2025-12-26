@@ -1,0 +1,36 @@
+services:
+  auth_nest_api:
+    container_name: auth_nest_api
+    user: "${UID:-1000}:${GID:-1000}"
+    command: 'sh -c "sleep 2; npm run start:dev"'
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '7001:7001'
+    volumes:
+      - './:/app'
+    depends_on:
+      - mongodb_auth
+    # networks:
+    #   - default
+    extra_hosts:
+      - "nitro:host-gateway"
+  mongodb_auth:
+    image: mongo:latest
+    container_name: mongodb_auth
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - "../data/mongodb:/data"
+      - "../mongodb/db:/data/db"
+    # networks:
+    #   - default
+    extra_hosts:
+      - "nitro:host-gateway"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27018/test --quiet
+      interval: 30s
+      timeout: 10s
+      retries: 3

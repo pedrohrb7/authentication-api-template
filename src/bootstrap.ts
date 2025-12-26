@@ -10,6 +10,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 
 import { AppModule } from './app.module';
+import { ConfigProvider } from '@infra/environment/providers/config.provider';
+
+const environment = new ConfigProvider('.env');
 
 async function registerHelmet(app: INestApplication): Promise<void> {
   const fastify = app.getHttpAdapter().getInstance() as FastifyInstance;
@@ -34,7 +37,7 @@ async function registerHelmet(app: INestApplication): Promise<void> {
 }
 
 function registerOpenAPI(app: INestApplication): void {
-  // if (!environment.ENABLE_OPENAPI) return;
+  if (!environment.get('ENABLE_OPENAPI')) return;
 
   const config = new DocumentBuilder()
     .setTitle('API')
