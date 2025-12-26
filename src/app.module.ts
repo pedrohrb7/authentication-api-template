@@ -1,13 +1,14 @@
+import { APP_FILTER } from '@nestjs/core';
 import { Logger, Module } from '@nestjs/common';
 
 import { LoggerModule } from '@infra/logger/logger.module';
 import { MongoDbModule } from '@infra/database/mongodb/mongo-db.module';
-import { UserModule } from '@modules/user/user.module';
-import { APP_FILTER } from '@nestjs/core';
+import * as Modules from '@modules/index';
+
 import { GlobalExceptionFilter } from '@infra/exceptions/global-filter.exception';
 
 @Module({
-  imports: [LoggerModule, MongoDbModule, UserModule],
+  imports: [LoggerModule, MongoDbModule, ...Object.values(Modules)],
   providers: [
     {
       provide: APP_FILTER,
