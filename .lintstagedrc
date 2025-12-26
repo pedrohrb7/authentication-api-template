@@ -1,0 +1,4 @@
+{
+  "./src/**/*.{ts,tsx,json}": "npm run prettier:format",
+  "*.{ts,tsx}": "npm run lint"
+}
