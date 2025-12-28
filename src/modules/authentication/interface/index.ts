@@ -1,4 +1,6 @@
+import { SignInDto } from '../dtos/SignInDto.dto';
+
 export interface IAuthController {
-  signIn(): string;
+  signIn(body: SignInDto): string;
   signUp(): string;
 }
