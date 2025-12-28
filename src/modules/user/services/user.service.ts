@@ -58,4 +58,9 @@ export class UserService implements IUserService {
       createdAt: new Date(),
     });
   }
+
+  async findByEmail(email: string): Promise<UserEntity[]> {
+    const user = await this.userRepository.find({ where: { email } });
+    return user;
+  }
 }

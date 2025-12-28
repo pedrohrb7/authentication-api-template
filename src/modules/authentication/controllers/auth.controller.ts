@@ -1,12 +1,7 @@
-import {
-  Body,
-  Controller,
-  ForbiddenException,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+import { AuthService } from '../services/auth.service';
 
 import { IAuthController } from '../interface';
 import { SignInDto } from '../dtos/SignInDto.dto';
@@ -14,21 +9,19 @@ import { SignInDto } from '../dtos/SignInDto.dto';
 @Controller('auth')
 @ApiTags('Authentication')
 export class AuthController implements IAuthController {
-  constructor() {}
+  constructor(private readonly authService: AuthService) {}
 
   @ApiOperation({ summary: 'Sign in a user' })
   @HttpCode(HttpStatus.OK)
-  @HttpCode(HttpStatus.FORBIDDEN)
+  @HttpCode(HttpStatus.NOT_FOUND)
   @Post('signin')
-  signIn(@Body() body: SignInDto): string {
-    throw new ForbiddenException(
-      `Method not implemented.${JSON.stringify(body)}`,
-    );
+  async signIn(@Body() body: SignInDto): Promise<string> {
+    return await this.authService.signIn(body);
   }
 
   @ApiOperation({ summary: 'Sign up a new user' })
   @Post('signup')
   signUp(): string {
-    throw new Error('Method not implemented.');
+    return this.authService.signUp();
   }
 }

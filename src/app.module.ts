@@ -3,10 +3,9 @@ import { Logger, Module } from '@nestjs/common';
 
 import { LoggerModule } from '@infra/logger/logger.module';
 import { MongoDbModule } from '@infra/database/mongodb/mongo-db.module';
+import { GlobalExceptionFilter } from '@infra/exceptions/global-filter.exception';
 
 import * as Modules from '@modules/index';
-
-import { GlobalExceptionFilter } from '@infra/exceptions/global-filter.exception';
 
 @Module({
   imports: [LoggerModule, MongoDbModule, ...Object.values(Modules)],

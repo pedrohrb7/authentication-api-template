@@ -8,6 +8,7 @@ export interface IUserController {
 
 export interface IUserService {
   findAll(params: any): Promise<any[]>;
+  findByEmail(email: string): Promise<any>;
   findById(id: string): Promise<any>;
   create(userData: any): Promise<any>;
   update(userData: any): Promise<any>;
