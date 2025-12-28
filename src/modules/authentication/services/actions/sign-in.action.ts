@@ -1,7 +1,7 @@
 import {
-  BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 import { SignInDto } from '@modules/authentication/dtos/SignInDto.dto';
@@ -30,7 +30,7 @@ export class SignInAction implements IAction {
     }
 
     if (data.password !== user[0].password) {
-      throw new BadRequestException('Email/Password wirng!');
+      throw new UnauthorizedException('Email/Password wirng!');
     }
 
     this.logger.debug(`Found user: ${JSON.stringify(user)}`, 'SignInAction');
