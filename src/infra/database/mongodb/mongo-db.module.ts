@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
 import { LoggerService } from '@infra/logger/services/logger.service';
-import {  EnvironmentModule } from '@infra/environment/config.module';
+import { EnvironmentModule } from '@infra/environment/config.module';
 
 const env = EnvironmentModule.getInstance();
 
@@ -18,8 +18,7 @@ const env = EnvironmentModule.getInstance();
         database: env.MONGO_DB_NAME,
         synchronize: env.NODE_ENV !== 'production',
         logging: env.DB_LOGGING,
-        autoLoadEntities:
-          process.env.AUTO_LOAD_MONGO_ENTITIES === 'true',
+        autoLoadEntities: process.env.AUTO_LOAD_MONGO_ENTITIES === 'true',
       }),
     }),
   ],
