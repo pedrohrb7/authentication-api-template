@@ -1,21 +1,19 @@
+import { EnvironmentModule } from '@infra/environment/config.module';
 import {
   ConsoleLogger,
   Injectable,
   LoggerService as LoggerServiceNest,
 } from '@nestjs/common';
 
-import { ConfigProvider } from '@infra/environment/providers/config.provider';
-
 @Injectable()
 export class LoggerService implements LoggerServiceNest {
   constructor() {}
-
-  private readonly configProvider = new ConfigProvider('.env');
+  private readonly envConfig = new EnvironmentModule();
 
   logger = new ConsoleLogger('CustomLogger', {
     timestamp: true,
     logLevels:
-      String(this.configProvider.get('NODE_ENV')) === 'development'
+      String(this.envConfig.NODE_ENV) === 'development'
         ? ['fatal', 'log', 'error', 'warn', 'debug']
         : ['error', 'warn', 'fatal'],
   });
