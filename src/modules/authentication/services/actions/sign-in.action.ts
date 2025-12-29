@@ -7,9 +7,9 @@ import {
 import { SignInDto } from '@modules/authentication/dtos/SignInDto.dto';
 
 import { LoggerService } from '@infra/logger/services/logger.service';
+import { UserService } from '@modules/user/services/user.service';
 
 import IAction from '@common/interfaces/IAction';
-import { UserService } from '@modules/user/services/user.service';
 
 @Injectable()
 export class SignInAction implements IAction {
